@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <script th:src="@{/js/jquery.min.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <title>添加用户信息</title>
+</head>
+<body>
+    <div style="text-align: center">
+        <br/>
+        <p style="font-size: 24px; font-weight: bold">
+            添加用户信息表单
+        </p>
+        <br/>
+        <p style="font-size: 18px; color: red">
+            信息提示！<span th:text="${msg}">请添加用户信息</span>
+        </p>
+        <form action="/addUser" method="post" onsubmit="return myCheck();">
+            用户名：<input type="text" name="name"/><br/><br/>
+            年&nbsp;&nbsp;&nbsp;&nbsp;龄：<input type="text" name="age"/><br/><br/>
+            <input type="submit" value="提交"/>&nbsp;&nbsp;
+            <input type="reset" value="重置"/>
+        </form>
+    </div>
+    <br/>
+    <div style="margin-left: 850px; font-size: 24px">
+        <a th:href="@{/userList}">返回</a>
+    </div>
+
+
+    <script type="text/javascript">
+        function myCheck() {
+            for(var i=0;i<document.form1.elements.length-1;i++) {
+                if(document.form1.elements[i].value=="") {
+                    alert("当前表单不能有空项");
+                    document.form1.elements[i].focus();
+                    return false;
+                }
+            }
+            return true;
+        }
+    </script>
+
+<!--<script>-->
+    <!--/*提示用户操作信息*/-->
+    <!--function tipsInter(msg) {-->
+        <!--alert(msg)-->
+    <!--}-->
+<!--</script>-->
+</body>
+</html>

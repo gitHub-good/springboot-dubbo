@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xu.srpingbootdubboprovider.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.xu.dubbo.dubbointerface.model.User">
+    <constructor>
+      <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="age" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, age
+  </sql>
+
+  <!--查询信息列表-->
+  <select id="selectUser" parameterType="com.xu.dubbo.dubbointerface.model.User" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--分页查询信息列表-->
+  <select id="selectUserByPage" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    limit #{startRow,jdbcType=INTEGER}, #{pageSize,jdbcType=INTEGER}
+  </select>
+
+  <!--分页查询信息列表总数-->
+  <select id="selectUserByTotal" resultType="java.lang.Integer">
+    select
+    count(*)
+    from user
+  </select>
+
+  <!--根据id查询数据信息-->
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <!--根据删除数据信息-->
+  <delete id="deleteUser" parameterType="com.xu.dubbo.dubbointerface.model.User">
+    delete from user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <!--添加用户数据信息-->
+  <insert id="insertUser" parameterType="com.xu.dubbo.dubbointerface.model.User">
+    insert into user (id, name, age
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER}
+      )
+  </insert>
+
+  <!--根据更新数据信息-->
+  <update id="updateUser" parameterType="com.xu.dubbo.dubbointerface.model.User">
+    update user
+    set name = #{name,jdbcType=VARCHAR},
+      age = #{age,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+</mapper>

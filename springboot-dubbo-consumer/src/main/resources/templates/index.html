@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/jquery-1.4.4.min.js}"></script>
+    <title>用户信息列表</title>
+</head>
+<body style="margin-left: 80px;margin-right: 80px">
+    <div>
+        <div>
+            <p style="text-align: center;font-size: 36px; font-weight: bold">用户信息列表</p>
+        </div>
+        <table class="table table-hover">
+            <caption>
+                <span>信息数据总数：</span>
+                <span th:text="${totalRows}"></span>&nbsp;&nbsp;
+                <a th:href="@{'/toAddUser'}" style="font-size: 18px">添加</a>
+            </caption>
+            <tr>
+                <th>序号</th>
+                <th>用户ID</th>
+                <th>用户名</th>
+                <th>年龄</th>
+                <th>操作</th>
+            </tr>
+            <tr th:each="user : ${userList}">
+                <td th:text="${userStat.count}"></td>
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.age}"></td>
+                <td>
+                    <a th:href="@{'/updateUser?id='+${user.id}+'&curPage='+${curPage}}">修改</a>&nbsp;&nbsp;
+                    <a th:href="@{'/deleteUser?id='+${user.id}+'&curPage='+${curPage}}" style="color: red">删除</a>
+                </td>
+            </tr>
+            <!--分页工具  start   -->
+            <tr style="text-align: center">
+                <td colspan="5">
+                    <form th:action="@{'/userList?curPage='+${curPage}}">
+                        <span th:if="${curPage <= 1}">
+                             首页
+                             上一页
+                        </span>
+                        <span th:if="${ curPage > 1}">
+                             <a th:href="@{/userList}">首页</a>
+                            <a th:href="@{'/userList?curPage='+${curPage - 1}}">上一页</a>
+                        </span>
+                            第 <input name="curPage" th:value="${curPage}" style="text-align: center;width: 30px;height: 18px"> 页
+                            <!--第 <input name="curPage" th:value="${curPage}" style="text-align: center;width: 30px;height: 18px" th:onclick="|javascript:tipsPage(${curPage},${totalPages})|"> 页-->
+                            <span th:if="${curPage == totalPages}">
+                             下一页
+                             尾页
+                        </span>
+                            <span th:if="${curPage < totalPages}">
+                            <a th:href="@{'/userList?curPage='+${curPage+1}}">下一页</a>
+                            <a th:href="@{'/userList?curPage='+${totalPages}}">尾页</a>
+                        </span>
+                            <input type="submit" value="确定" style="size: 5px">
+                    </form>
+                </td>
+            </tr>
+            <!--分页工具  end   -->
+        </table>
+    </div>
+
+
+<!--<script>-->
+    <!--function tipsPage(curPage,totalPages) {-->
+        <!--if(curPage > totalPages){-->
+            <!--alert("最后一页为"+totalPages);-->
+        <!--}-->
+    <!--}-->
+<!--</script>-->
+</body>
+</html>
